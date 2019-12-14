@@ -1,0 +1,62 @@
+{
+	"info": {
+		"_postman_id": "dfdc6554-861b-4006-98d3-0ff60049d590",
+		"name": "koka-stub",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "test method GET",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bc728d62-b121-4314-a34c-82e8532d966d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"name is smalldoc\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql(\"smalldoc\");",
+							"});",
+							"pm.test(\"age in 12\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.age).to.eql(12);",
+							"});",
+							"pm.test(\"address is 123 มหาลัยขอนแก่น อ.เมือง 40002\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.address).to.eql(\"123 มหาลัยขอนแก่น อ.เมือง 40002\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/books/3223",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"books",
+						"3223"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
