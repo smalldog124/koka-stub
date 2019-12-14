@@ -1,0 +1,21 @@
+{
+    "decription": "xxx",
+    "request": {
+        "path": "/books/3223",
+        "method": "GET",
+        "header": {
+            "Content-Type": "application/json"
+        }
+    },
+    "response": {
+        "status": 200,
+        "header": {
+            "Content-Type": "application/json"
+        },
+        "body":{
+            "name":"smalldoc",
+            "age":12,
+            "address":"123 มหาลัยขอนแก่น อ.เมือง 40002"
+        }
+    }
+}

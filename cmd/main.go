@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -11,7 +12,7 @@ import (
 type DataStub struct {
 	Decription string          `json:"decription"`
 	Request    RequestRawData  `json:"request"`
-	Response   ResponseRawData `json:"respons"`
+	Response   ResponseRawData `json:"response"`
 }
 
 type RequestRawData struct {
@@ -37,8 +38,24 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(string(rawFileData))
 
+	var rawData DataStub
+	if err = json.Unmarshal(rawFileData, &rawData); err != nil {
+		log.Panicln(err)
+	}
+
+	http.HandleFunc(rawData.Request.Path, func(w http.ResponseWriter, r *http.Request) {
+		for kay, value := range rawData.Request.Header {
+			w.Header().Set(kay, value)
+		}
+		responseBody, err := json.Marshal(rawData.Response.Body)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, "%s", responseBody)
+	})
 	log.Println("server start on port", port)
 	log.Fatal(http.ListenAndServe(port, nil))
 }
